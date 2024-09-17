@@ -1,4 +1,7 @@
+import type { Network } from "@mysten/suins";
+
 export interface NetworkConfig {
+  ns?: Network;
   rpc?: string;
   network: string;
 }

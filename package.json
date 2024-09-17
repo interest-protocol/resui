@@ -1,6 +1,6 @@
 {
   "name": "@interest-protocol/resui",
-  "version": "0.0.1-alpha",
+  "version": "0.0.2-alpha",
   "description": "Sui React Library to create a complete DApp.",
   "src": "src/lib/index.ts",
   "main": "dist/index.js",

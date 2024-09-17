@@ -1,6 +1,6 @@
 import { SuiClient, SuiObjectResponse } from '@mysten/sui/client';
 
-import { CoinObject } from '../coins-manager/coins-manager.types';
+import { SimpleCoin } from '../coins-manager/coins-manager.types';
 
 export type TGetAllObjects = (
   provider: SuiClient,
@@ -21,7 +21,7 @@ export interface AllObjects {
 }
 
 export interface CoinObjectData extends Omit<BaseObjectData, 'display'> {
-  display: CoinObject;
+  display: SimpleCoin;
 }
 
 export type ObjectData = BaseObjectData | CoinObjectData;

@@ -1,4 +1,5 @@
-import { SuinsClient } from '@mysten/suins';
+import type { Network, SuinsClient } from '@mysten/suins';
+import { NetworkConfig, NetworkProviderProps } from '../network/network.types';
 
 export interface ISuiNsContext {
   loading: boolean;
@@ -7,6 +8,4 @@ export interface ISuiNsContext {
   images: Record<string, string>;
 }
 
-export interface SuiNSProviderProps {
-  suiNSClient: SuinsClient;
-}
+export type SuiNSProviderProps = Pick<NetworkProviderProps, 'networks'>;

@@ -12,12 +12,13 @@ import {
 import { ISuiNsContext, SuiNSProviderProps } from './suins.types';
 import { useNetwork } from '../network/network.hooks';
 import React from 'react';
+import { Network, SuinsClient } from '@mysten/suins';
 
 const suiNsContext = createContext<ISuiNsContext>({} as ISuiNsContext);
 
 export const SuiNsProvider: FC<PropsWithChildren<SuiNSProviderProps>> = ({
   children,
-  suiNSClient,
+  networks,
 }) => {
   const network = useNetwork();
   const accounts = useAccounts();
@@ -26,6 +27,19 @@ export const SuiNsProvider: FC<PropsWithChildren<SuiNSProviderProps>> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [names, setNames] = useState<Record<string, string[]>>({});
   const [nsImages, setNsImages] = useState<Record<string, string>>({});
+
+  const nsMap = networks.reduce(
+    (acc, { network, ns }) => ({
+      ...acc,
+      [network]: ns,
+    }),
+    {} as Record<string, Network | undefined>
+  );
+
+  const suiNsClient = new SuinsClient({
+    client: suiClient,
+    network: (nsMap[network] as Network) ?? 'custom',
+  });
 
   useEffect(() => {
     if (accounts.length) {
@@ -60,7 +74,7 @@ export const SuiNsProvider: FC<PropsWithChildren<SuiNSProviderProps>> = ({
               names.map(async (name) => {
                 if (!name || !name.data.length) return [null, null];
 
-                return suiNSClient
+                return suiNsClient
                   .getNameRecord(name.data[0])
                   .then(async (object) => {
                     const nftId = prop('nftId', object as any);
@@ -100,7 +114,7 @@ export const SuiNsProvider: FC<PropsWithChildren<SuiNSProviderProps>> = ({
     names,
     loading,
     images: nsImages,
-    suinsClient: suiNSClient,
+    suinsClient: suiNsClient,
   };
 
   return <Provider value={value}>{children}</Provider>;

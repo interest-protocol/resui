@@ -1,6 +1,6 @@
 import { WalletProvider } from '@mysten/dapp-kit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { FC, PropsWithChildren } from 'react';
+import React, { type FC, type PropsWithChildren } from 'react';
 
 import { NetworkProvider } from '../network';
 import { SuiNsProvider } from '../suins';
@@ -21,7 +21,7 @@ const SuiProvider: FC<PropsWithChildren<SuiProviderProps>> = ({
       onChangeNetwork={onChangeNetwork}
     >
       <WalletProvider {...wallet}>
-        <SuiNsProvider>{children}</SuiNsProvider>
+        <SuiNsProvider networks={networks}>{children}</SuiNsProvider>
       </WalletProvider>
     </NetworkProvider>
   </QueryClientProvider>
