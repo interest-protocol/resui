@@ -1,4 +1,4 @@
-import { SimpleCoin, CoinsMap } from '../../coins-manager/coins-manager.types';
+import { CoinObject, CoinsMap } from '../../coins-manager/coins-manager.types';
 
 export interface UseCoinsResponse {
   id: string;
@@ -7,9 +7,10 @@ export interface UseCoinsResponse {
   coinsMap: CoinsMap;
   refresh: () => void;
   delay: number | undefined;
-  coins: ReadonlyArray<SimpleCoin>;
+  coins: ReadonlyArray<CoinObject>;
+  setCoins: (data: CoinsMap) => void;
+  addCoins: (data: CoinsMap) => void;
   updateError: (data: boolean) => void;
-  updateCoins: (data: CoinsMap) => void;
   updateLoading: (data: boolean) => void;
   updateDelay: (delay: number | undefined) => void;
 }

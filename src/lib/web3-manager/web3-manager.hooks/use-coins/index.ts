@@ -6,11 +6,17 @@ import { CoinsMap } from '../../coins-manager/coins-manager.types';
 import { UseCoinsResponse } from './use-coins.types';
 
 export const useCoins = create<UseCoinsResponse>((set) => {
-  const updateCoins = (response: CoinsMap) =>
+  const setCoins = (response: CoinsMap) =>
     set({
       coinsMap: response ?? {},
       coins: values((response ?? {}) as CoinsMap),
     });
+
+  const addCoins = (response: CoinsMap) =>
+    set(({ coinsMap, coins }) => ({
+      coinsMap: { ...coinsMap, ...response },
+      coins: [...coins, ...values(response)],
+    }));
 
   const updateLoading = (response: boolean) => set({ loading: response });
 
@@ -27,11 +33,12 @@ export const useCoins = create<UseCoinsResponse>((set) => {
     delay: 10000,
     coinsMap: {},
     loading: false,
-    mutate: () => {},
     refresh,
+    setCoins,
+    addCoins,
     updateDelay,
-    updateCoins,
     updateError,
     updateLoading,
+    mutate: () => {},
   };
 });
